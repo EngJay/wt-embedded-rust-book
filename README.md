@@ -20,6 +20,39 @@ repo to provide its build environment. It is included as a submodule in the
 root of the repo. Clone this repo with submodules included recursively to pull
 in everything needed to build in a Docker container.
 
+### Issues with macOS
+
+The issue with developing with tools like OpenOCD and gdb that use hardware
+ports on macOS is they can't be passed through to a Docker container as is
+possible with Linux. This means using a Mac requires OpenOCD and gdb be
+installed and run directly on the machine. Two easy workarounds for this are
+possible (if Homebrew and Anaconda are already installed). Both of these
+solutions worked fine when I worked through the book.
+
+#### OpenOCD
+
+OpenOCD can be installed using [Homebrew](https://brew.sh/).
+
+```bash
+> brew install openocd
+```
+
+#### gdb-multiarch
+
+[Memfault](https://memfault.com/) has created an
+[Anaconda](https://www.anaconda.com/) package for installing gdb-multiarch on a
+macOS machine. See the
+[Conda section](https://interrupt.memfault.com/blog/installing-gdb#conda) of
+their
+[blog post on installing gdb](https://interrupt.memfault.com/blog/installing-gdb).
+The environment file recommended in the article is included in the root of the
+repo, so as long as Anaconda is already installed gdb-multiarch can be
+installed by creating a Conda environment from the root of the repo.
+
+```bash
+> conda env create -f environment.yml 
+```
+
 ## Building
 
 TODO
