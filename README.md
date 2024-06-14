@@ -20,11 +20,48 @@ repo to provide its build environment. It is included as a submodule in the
 root of the repo. Clone this repo with submodules included recursively to pull
 in everything needed to build in a Docker container.
 
+### Issues with macOS
+
+The issue with developing with tools like OpenOCD and gdb that use hardware
+ports on macOS is they can't be passed through to a Docker container as is
+possible with Linux. This means using a Mac requires OpenOCD and gdb be
+installed and run directly on the machine. Two easy workarounds for this are
+possible (if Homebrew and Anaconda are already installed). Both of these
+solutions worked fine when I worked through the book.
+
+#### OpenOCD
+
+OpenOCD can be installed using [Homebrew](https://brew.sh/).
+
+```bash
+> brew install openocd
+```
+
+#### gdb-multiarch
+
+[Memfault](https://memfault.com/) has created an
+[Anaconda](https://www.anaconda.com/) package for installing gdb-multiarch on a
+macOS machine. See the
+[Conda section](https://interrupt.memfault.com/blog/installing-gdb#conda) of
+their
+[blog post on installing gdb](https://interrupt.memfault.com/blog/installing-gdb).
+The environment file recommended in the article is included in the root of the
+repo, so as long as Anaconda is already installed gdb-multiarch can be
+installed by creating a Conda environment from the root of the repo.
+
+```bash
+> conda env create -f environment.yml 
+```
+
 ## Building
 
-TODO
+The Docker images provided by the
+[build-systems](https://github.com/EngJay/build-systems) submodule have the
+necessary environment configured to build the ARMv7-M (Cortex-M3) and ARMv7-EM
+(Cortex-M4F) examples in this repo.
 
-To open a shell in a build environment container, run from the root of the repo.
+To open a shell in a build environment container, run the shell script from the
+root of the repo with the details for the image to use.
 
 ```bash
 > ./build-systems/scripts/shell.sh ORG_NAME:IMAGE_NAME:VERSION
@@ -46,6 +83,23 @@ root@ca5eda15a2f0:/#
 ## Notes
 
 Notes, tips, and tricks.
+
+### Cargo Generate Warning "Error: could not determine the current user, please set $USER"
+
+If the $USER is not set in the container, `cargo-generate` will fail with the error,
+`Error: could not determine the current user, please set $USER`.
+
+A quick fix is to set the user in the container.
+
+```bash
+root@6106dcaa0b0c:/repo# export USER=auser
+root@6106dcaa0b0c:/repo# cargo generate -n hardware-example --git https://github.com/rust-embedded/cortex-m-quickstart
+ Destination: /repo/hardware-example ...
+ project-name: hardware-example ...
+ Generating template ...
+ Moving generated files into: `/repo/hardware-example`...
+ Initializing a fresh Git repository
+```
 
 ### QEMU Warning "Timer with period zero, disabling"
 
