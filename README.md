@@ -55,9 +55,13 @@ installed by creating a Conda environment from the root of the repo.
 
 ## Building
 
-TODO
+The Docker images provided by the
+[build-systems](https://github.com/EngJay/build-systems) submodule have the
+necessary environment configured to build the ARMv7-M (Cortex-M3) and ARMv7-EM
+(Cortex-M4F) examples in this repo.
 
-To open a shell in a build environment container, run from the root of the repo.
+To open a shell in a build environment container, run the shell script from the
+root of the repo with the details for the image to use.
 
 ```bash
 > ./build-systems/scripts/shell.sh ORG_NAME:IMAGE_NAME:VERSION
