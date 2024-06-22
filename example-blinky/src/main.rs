@@ -47,6 +47,16 @@ fn main() -> ! {
     //
     let mut reset_and_clock_control = device_periphs.RCC.constrain();
 
+    // Get GPIO Port E.
+    //
+    // The split method here splits out the functionality of the GPIO Port E
+    // while taking a mutable borrow of an "enabler" that enables the clock for
+    // the port at the same time. The mutable borrow allows modification of the
+    // borrowed value while ensuring exclusive access.
+    //
+    let mut gpioe: stm32f3_discovery::stm32f3xx_hal::gpio::gpioe::Parts =
+        device_periphs.GPIOE.split(&mut reset_and_clock_control.ahb);
+
     loop {
         // your code goes here
     }
