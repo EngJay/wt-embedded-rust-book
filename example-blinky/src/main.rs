@@ -21,7 +21,21 @@ use stm32f3_discovery::switch_hal::{OutputSwitch, ToggleableOutputSwitch};
 
 #[entry]
 fn main() -> ! {
-    asm::nop(); // To not have main optimize to abort in release mode, remove when you add code
+    // Get peripherals.
+    //
+    // take() returns an Option, which requires handling the possibility of the
+    // return of an Err or None instead of the desired value, which is of type
+    // Peripherals in this case.
+    //
+    // Since this is an embedded application, it's not as simple as writing to,
+    // stdout. This is a minimal example, so we'll drop into an inifinite loop
+    // to allow a debugger to find where the failure.
+    let dp = pac::Peripherals::take().unwrap_or_else(|| {
+        loop {
+            // Failed to take Peripherals.
+            asm::nop(); // If real app, replace with actual error handling code.
+        }
+    });
 
     loop {
         // your code goes here
