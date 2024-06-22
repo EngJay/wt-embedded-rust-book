@@ -30,12 +30,22 @@ fn main() -> ! {
     // Since this is an embedded application, it's not as simple as writing to,
     // stdout. This is a minimal example, so we'll drop into an inifinite loop
     // to allow a debugger to find where the failure.
-    let dp = pac::Peripherals::take().unwrap_or_else(|| {
+    //
+    let device_periphs = pac::Peripherals::take().unwrap_or_else(|| {
         loop {
             // Failed to take Peripherals.
             asm::nop(); // If real app, replace with actual error handling code.
         }
     });
+
+    // Get RCC peripheral.
+    //
+    // The constrain() method is used here to provide a higher-level abstraction
+    // of the peripheral rather than raw register access. The method consumes
+    // the raw peripheral and returns an instance of the RCC peripheral with
+    // higher-level safe abstractions provided by the HAL, which is of type Rcc.
+    //
+    let mut reset_and_clock_control = device_periphs.RCC.constrain();
 
     loop {
         // your code goes here
