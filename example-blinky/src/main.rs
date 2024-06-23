@@ -2,10 +2,11 @@
 #![no_std]
 #![no_main]
 
-// pick a panicking behavior.
+// Use halt as the panicking behavior.
 //
-use panic_halt as _; // you can put a breakpoint on `rust_begin_unwind` to catch panics
-
+// A breakpoint can be set on `rust_begin_unwind` to catch panics.
+//
+use panic_halt as _;
 // use panic_abort as _; // requires nightly
 // use panic_itm as _; // logs messages over ITM; requires ITM support
 // use panic_semihosting as _; // logs messages to the host stderr; requires a debugger
@@ -18,7 +19,7 @@ use stm32f3_discovery::stm32f3xx_hal::pac;
 use stm32f3_discovery::stm32f3xx_hal::prelude::*;
 
 use stm32f3_discovery::leds::Leds;
-use stm32f3_discovery::switch_hal::{OutputSwitch, ToggleableOutputSwitch};
+use stm32f3_discovery::switch_hal::ToggleableOutputSwitch;
 
 #[entry]
 fn main() -> ! {
@@ -99,6 +100,8 @@ fn main() -> ! {
     //
     const LED_TOGGLE_DELAY_MS: u16 = 500;
 
+    // Main loop.
+    //
     loop {
         leds.ld3.toggle().ok();
         leds.ld4.toggle().ok();
