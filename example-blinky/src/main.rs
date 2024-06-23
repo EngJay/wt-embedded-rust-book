@@ -2,7 +2,8 @@
 #![no_std]
 #![no_main]
 
-// pick a panicking behavior
+// pick a panicking behavior.
+//
 use panic_halt as _; // you can put a breakpoint on `rust_begin_unwind` to catch panics
 
 // use panic_abort as _; // requires nightly
@@ -94,7 +95,19 @@ fn main() -> ! {
         &mut gpioe.otyper,
     );
 
+    // Delay in milliseconds between toggles of the LEDs.
+    //
+    const LED_TOGGLE_DELAY_MS: u16 = 500;
+
     loop {
-        // your code goes here
+        leds.ld3.toggle().ok();
+        leds.ld4.toggle().ok();
+        leds.ld5.toggle().ok();
+        leds.ld6.toggle().ok();
+        leds.ld7.toggle().ok();
+        leds.ld8.toggle().ok();
+        leds.ld9.toggle().ok();
+        leds.ld10.toggle().ok();
+        delay.delay_ms(LED_TOGGLE_DELAY_MS);
     }
 }
