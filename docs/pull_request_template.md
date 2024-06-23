@@ -12,7 +12,7 @@ the resolution of the issue.
 
 -->
 
-Resolves #
+- resolves #
 
 ## Details
 <!-- 
