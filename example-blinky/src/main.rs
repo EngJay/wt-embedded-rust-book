@@ -25,7 +25,7 @@ fn main() -> ! {
     //
     // take() returns an Option, which requires handling the possibility of the
     // return of an Err or None instead of the desired value, which is of type
-    // Peripherals in this case.
+    // pac::Peripherals in this case.
     //
     // Since this is an embedded application, it's not as simple as writing to,
     // stdout. This is a minimal example, so we'll drop into an inifinite loop
@@ -47,6 +47,24 @@ fn main() -> ! {
     //
     let mut reset_and_clock_control = device_periphs.RCC.constrain();
 
+    // Set up delay capability.
+    //
+    // Use the same unwrap and constrain methods to get the core periphs and
+    // flash periph, set up the clocks, which requires passing in the flash ACR
+    // register so the appropriate latency for flash memory can be set based on
+    // the config of the clocks. Then, a Delay instance is created with the
+    // clocks config and SysTick (SYST).
+    //
+    let core_periphs = cortex_m::Peripherals::take().unwrap_or_else(|| {
+        loop {
+            // Failed to take cortex_m::Peripherals.
+            asm::nop(); // If real app, replace with actual error handling code.
+        }
+    });
+    let mut flash = device_periphs.FLASH.constrain();
+    let clocks = reset_and_clock_control.cfgr.freeze(&mut flash.acr);
+    let mut delay = Delay::new(core_periphs.SYST, clocks);
+
     // Get GPIO Port E.
     //
     // The split method here splits out the functionality of the GPIO Port E
@@ -56,6 +74,25 @@ fn main() -> ! {
     //
     let mut gpioe: stm32f3_discovery::stm32f3xx_hal::gpio::gpioe::Parts =
         device_periphs.GPIOE.split(&mut reset_and_clock_control.ahb);
+
+    // Create an instance of the board's LEDs.
+    //
+    // The constructor of the Leds type takes the specific pins from GPIO Port
+    // E that are attached to the LEDs on the board plus the mode and output
+    // type registers for Port E.
+    //
+    let mut leds = Leds::new(
+        gpioe.pe8,
+        gpioe.pe9,
+        gpioe.pe10,
+        gpioe.pe11,
+        gpioe.pe12,
+        gpioe.pe13,
+        gpioe.pe14,
+        gpioe.pe15,
+        &mut gpioe.moder,
+        &mut gpioe.otyper,
+    );
 
     loop {
         // your code goes here
