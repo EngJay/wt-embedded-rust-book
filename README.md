@@ -12,6 +12,17 @@ the The Embedded Rust Book is I've used my own framework for containerizing
 build environments to keep everything decoupled from my workstation machine and
 easily reproducible.
 
+## Additions
+
+Some additional work has been done aside from working through the examples in
+the book. All of the info in this README applies to the additonal examples
+unless otherwise noted.
+
+Additional examples include:
+
+- `example-blinky`: this is a minimal example of blinking LEDs LD3 through LD10
+  based on the example in the [`stm32f3-discovery board crate`](https://github.com/rubberduck203/stm32f3-discovery).
+
 ## Dependencies
 
 This repo depends on the
