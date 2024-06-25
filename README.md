@@ -20,7 +20,7 @@ unless otherwise noted.
 
 Additional examples include:
 
-**`example-blinky`**: A minimal example of blinking LEDs.
+**`blinky`**: A minimal example of blinking LEDs.
 
 - `nucleo-f767zi`: Blips LEDs LD1, LD2, and LD3, based on the example in the
   [`stm32f7xx-hal` crate](https://github.com/stm32-rs/stm32f7xx-hal) since a
