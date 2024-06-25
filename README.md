@@ -20,8 +20,14 @@ unless otherwise noted.
 
 Additional examples include:
 
-- `example-blinky`: this is a minimal example of blinking LEDs LD3 through LD10
-  based on the example in the [`stm32f3-discovery board crate`](https://github.com/rubberduck203/stm32f3-discovery).
+**`blinky`**: A minimal example of blinking LEDs.
+
+- `nucleo-f767zi`: Blips LEDs LD1, LD2, and LD3, based on the example in the
+  [`stm32f7xx-hal` crate](https://github.com/stm32-rs/stm32f7xx-hal) since a
+  current board crate is not available.
+
+- `stm32f3-disco`:  Blinks LEDs LD3 through LD10, based on the example in the
+  [`stm32f3-discovery` board crate](https://github.com/rubberduck203/stm32f3-discovery).
 
 ## Dependencies
 
