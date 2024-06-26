@@ -147,3 +147,22 @@ To debug the applications in QEMU running in a Docker container:
 2. Open a second terminal window, then open a second shell in the running
   container.
 3. Connect to the running instance of QEMU using `gdb`.
+
+### Issues with VS Code
+
+#### Rust-Analyzer Code Completion Doesn't Work
+
+The `rust-analyzer` extension seems to look for `Cargo.toml` files only in the
+root of the VS Code project, so it has to be informed of the locations of the
+files if they are elsewhere, it seems. This
+[stackoverflow answer](https://stackoverflow.com/a/76195654) worked - adding a
+`rust-analyzer.linkedProjects` entry to the VS Code settings in the project
+root.
+
+```json
+"rust-analyzer.linkedProjects": [
+    "./examples/blinky/nucleo-f767zi/Cargo.toml",
+    "./examples/blinky/stm32f3-disco/Cargo.toml",
+    ...
+  ]
+```
