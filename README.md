@@ -29,6 +29,15 @@ Additional examples include:
 - `stm32f3-disco`:  Blinks LEDs LD3 through LD10, based on the example in the
   [`stm32f3-discovery` board crate](https://github.com/rubberduck203/stm32f3-discovery).
 
+**`uart`**: A minimal UART comms example of writing out "Hello World!".
+
+- `stm32f3-disco`:  Writes "Hello World!" out via UART4 (PC10/PC11, TX/RX) at 0.5 Hz,
+  based on the UART example in
+  [Section 2.3 Memory-mapped Registers](https://docs.rust-embedded.org/book/start/registers.html)
+  of the book using the
+  [stm32f3xx-hal crate](https://docs.rs/stm32f3xx-hal/0.10.0/stm32f3xx_hal/index.html)
+  directly rather than through the board support crate.
+
 ## Dependencies
 
 This repo depends on the
@@ -147,3 +156,22 @@ To debug the applications in QEMU running in a Docker container:
 2. Open a second terminal window, then open a second shell in the running
   container.
 3. Connect to the running instance of QEMU using `gdb`.
+
+### Issues with VS Code
+
+#### Rust-Analyzer Code Completion Doesn't Work
+
+The `rust-analyzer` extension seems to look for `Cargo.toml` files only in the
+root of the VS Code project, so it has to be informed of the locations of the
+files if they are elsewhere, it seems. This
+[stackoverflow answer](https://stackoverflow.com/a/76195654) worked - adding a
+`rust-analyzer.linkedProjects` entry to the VS Code settings in the project
+root.
+
+```json
+"rust-analyzer.linkedProjects": [
+    "./examples/blinky/nucleo-f767zi/Cargo.toml",
+    "./examples/blinky/stm32f3-disco/Cargo.toml",
+    ...
+  ]
+```
