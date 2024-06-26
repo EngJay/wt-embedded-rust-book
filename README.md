@@ -31,7 +31,7 @@ Additional examples include:
 
 **`uart`**: A minimal UART comms example of writing out "Hello World!".
 
-- `stm32f3-disco`:  Writes "Hello World!" out via UART4 (PC10/PC11, TX/RX),
+- `stm32f3-disco`:  Writes "Hello World!" out via UART4 (PC10/PC11, TX/RX) at 0.5 Hz,
   based on the UART example in
   [Section 2.3 Memory-mapped Registers](https://docs.rust-embedded.org/book/start/registers.html)
   of the book using the
