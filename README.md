@@ -29,6 +29,15 @@ Additional examples include:
 - `stm32f3-disco`:  Blinks LEDs LD3 through LD10, based on the example in the
   [`stm32f3-discovery` board crate](https://github.com/rubberduck203/stm32f3-discovery).
 
+**`uart`**: A minimal UART comms example of writing out "Hello World!".
+
+- `stm32f3-disco`:  Writes "Hello World!" out via UART4 (PC10/PC11, TX/RX),
+  based on the UART example in
+  [Section 2.3 Memory-mapped Registers](https://docs.rust-embedded.org/book/start/registers.html)
+  of the book using the
+  [stm32f3xx-hal crate](https://docs.rs/stm32f3xx-hal/0.10.0/stm32f3xx_hal/index.html)
+  directly rather than through the board support crate.
+
 ## Dependencies
 
 This repo depends on the
