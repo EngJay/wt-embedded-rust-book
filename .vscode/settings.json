@@ -1,0 +1,9 @@
+{
+  "rust-analyzer.linkedProjects": [
+    "./examples/blinky/nucleo-f767zi/Cargo.toml",
+    "./examples/blinky/stm32f3-disco/Cargo.toml",
+    "./examples/hardware/stm32f3-disco/Cargo.toml",
+    "./examples/qemu/lm3s6965evb/Cargo.toml",
+    "./examples/uart/stm32f3-disco/Cargo.toml"
+  ]
+}
