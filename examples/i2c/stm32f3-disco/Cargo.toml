@@ -1,15 +1,18 @@
 [package]
 authors = ["auser"]
-edition = "2018"
+edition = "2021"
 readme = "README.md"
 name = "example-i2c"
 version = "0.1.0"
 
 [dependencies]
-cortex-m = "0.7.7"
+cortex-m = { version = "0.7", features = ["critical-section-single-core"] }
 cortex-m-rt = "0.7.3"
 cortex-m-semihosting = "0.5.0"
-panic-halt = "0.2.0"
+defmt = "0.3"
+defmt-rtt = "0.4"
+panic-probe = { version = "0.3", features = ["print-defmt"] }
+# panic-halt = "0.2.0"
 stm32f3xx-hal = { version = "0.10.0", features = ["ld", "rt", "stm32f303xc"] }
 
 # Uncomment for the panic example.
@@ -31,7 +34,40 @@ name = "example-i2c"
 test = false
 bench = false
 
+# cargo build/run
+[profile.dev]
+codegen-units = 1
+debug = 2
+debug-assertions = true # <-
+incremental = false
+opt-level = 'z'         # <-
+overflow-checks = true  # <-
+
+# cargo test
+[profile.test]
+codegen-units = 1
+debug = 2
+debug-assertions = true # <-
+incremental = false
+opt-level = 3           # <-
+overflow-checks = true  # <-
+
+# cargo build/run --release
 [profile.release]
-codegen-units = 1 # better optimizations
-debug = true      # symbols are nice and they don't increase the size on Flash
-lto = true        # better optimizations
+codegen-units = 1
+debug = 2
+debug-assertions = false # <-
+incremental = false
+lto = 'fat'
+opt-level = 3            # <-
+overflow-checks = false  # <-
+
+# cargo test --release
+[profile.bench]
+codegen-units = 1
+debug = 2
+debug-assertions = false # <-
+incremental = false
+lto = 'fat'
+opt-level = 3            # <-
+overflow-checks = false  # <-
